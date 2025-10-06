@@ -1,6 +1,6 @@
 import { createRoot } from "react-dom/client";
 import "./styles/globals.css";
-import App from "./components/App";
+import App from "./components/app";
 import { BrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";

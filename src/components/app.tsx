@@ -1,27 +1,30 @@
 import { Route, Routes } from "react-router-dom";
 import "../index.css";
-import Header from "./Header";
-import Home from "./Home";
-import Pokemon from "./Pokemon";
-import Whishlist from "./Whishlist";
+import Header from "./header";
+import Home from "./home";
+import Pokemon from "./pokemon";
+import Whishlist from "./wishlist";
+import InfinitScrolling from "./infiniteScrolling";
+import Navbar from "./navbar";
+import Layout from "./layout";
 
+export default function App() {
+  return (
+    <div className="app">
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<Home />} />
 
-export default function App(){
+          <Route path="/pokemon/favourites" element={<Whishlist />} />
 
-    return(
-        <div className="">
-        
-        <Header/>
+          <Route
+            path="/pokemon/infinite-scroll"
+            element={<InfinitScrolling />}
+          />
+        </Route>
 
-        <Routes>
-
-            <Route path="/" element={<Home/>} />
-            
-            <Route path="/pokemon/:id" element={<Pokemon/>} />
-
-            <Route path="/pokemon/favourites" element={<Whishlist/>} />
-        </Routes>
-        
-        </div>
-    )
+        <Route path="/pokemon/:id" element={<Pokemon />} />
+      </Routes>
+    </div>
+  );
 }

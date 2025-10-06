@@ -9,7 +9,7 @@ export default function PokemonCard({ currPokemonData }: any) {
   return (
     <div className="card h-72 w-72 p-3 border cursor-pointer bg-blue-300 shadow-md rounded-xl hover:shadow-xl hover:scale-105 transition-transform duration-200">
       <button
-        className={`px-3 py-1 text-sm font-semibold rounded-md shadow ${
+        className={`px-3 py-1 text-sm font-semibold rounded-md shadow cursor-pointer ${
           added ? "bg-red-500 text-white" : "bg-white text-black"
         }`}
         onClick={(e) => {

@@ -23,28 +23,32 @@ export default function Pagination({ currPage, setCurrPage }: PaginationProps) {
 
   const pagesToRender = [...prevThreeNoArr, ...curr_nextThreeNoArr];
 
-  const handlePrev = (): void => {
-    console.log("handlePrevClicked");
-    setCurrPage(currPage - 1);
-  };
-
-  const handleNext = (): void => {
-    console.log("handleNextClicked");
-    setCurrPage(currPage + 1);
-  };
-
-  const handlePagination = (page: number): void => {
-    setCurrPage(page);
+  const handlePagination = (
+    action: "prev" | "next" | "individual-page",
+    page?: number
+  ): void => {
+    const newPage =
+      action === "prev"
+        ? currPage - 1
+        : action === "next"
+        ? currPage + 1
+        : page ?? currPage;
+    setCurrPage(newPage);
     console.log("pageclicked");
+    scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
-    <div className="pagination flex justify-center space-x-2 mt-6 ">
+    <div className="pagination flex justify-center space-x-2 mt-10 mb-10 ">
       <button
-        className="prev px-3 py-1 rounded border border-gray-300 bg-blue-700 cursor-pointer  hover:text-white transition-colors"
+        className={`prev px-3 py-1 rounded border border-gray-300 ${
+          currPage !== 1
+            ? "bg-blue-700 cursor-pointer  hover:text-white transition-colors"
+            : ""
+        } `}
         disabled={currPage === 1}
         onClick={() => {
-          handlePrev();
+          handlePagination("prev");
         }}
       >
         Prev
@@ -57,17 +61,20 @@ export default function Pagination({ currPage, setCurrPage }: PaginationProps) {
               currPage === num ? "bg-red-500" : ""
             } `}
             key={num}
-            onClick={() => handlePagination(num)}
+            onClick={() => handlePagination("individual-page", num)}
           >
-            {" "}
-            {num}{" "}
+            {num}
           </button>
         );
       })}
 
       <button
-        className="next px-3 py-1 rounded border border-gray-300 bg-blue-700 cursor-pointer  hover:text-white transition-colors"
-        onClick={() => handleNext()}
+        className={`next px-3 py-1 rounded border border-gray-300 ${
+          currPage < MAX_PAGES
+            ? " bg-blue-700 cursor-pointer  hover:text-white transition-colors"
+            : ""
+        }`}
+        onClick={() => handlePagination("next")}
         disabled={currPage >= MAX_PAGES}
       >
         Next

@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { BASE_URL } from "../constants/api";
+import { BASE_URL, STALE_TIME } from "../constants/api";
 import fetchPokemonDetail from "../api/fetchPokemonDetails";
 import { useQuery } from "@tanstack/react-query";
 
@@ -11,12 +11,14 @@ export default function Pokemon() {
   const { data, isLoading } = useQuery({
     queryKey: ["individual-Pokemon", API_URL],
     queryFn: fetchPokemonDetail,
-    staleTime: 1000 * 60 * 5,
+    staleTime: STALE_TIME,
   });
 
   const pokemon = data;
 
   if (isLoading) return <p className="text-center ">Loading...</p>;
+
+  // useEffect(() => {}, []);
 
   return (
     <div className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-2xl">
@@ -24,7 +26,7 @@ export default function Pokemon() {
         <img
           className="w-40 h-40 object-contain"
           src={pokemon?.sprites?.other?.dream_world?.front_default}
-          alt={""}
+          alt={"Loading"}
         />
         <h1 className="mt-4 text-3xl font-bold capitalize">{pokemon?.name}</h1>
         <p className="text-gray-500">#{pokemon?.id}</p>
